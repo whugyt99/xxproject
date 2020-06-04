@@ -1,20 +1,23 @@
 <template>
   <div id="app">
-<!--    导航栏-->
-    <div style="background-color: #2c3e50;text-align: center;height: 150px">
-      <span style="font-size: xx-large;color: white; margin-top: 10px"><b>xx小分队</b></span>
+    <div class="cc-primary-picture">
+      <span style="font-size: xx-large;color: white; margin-top:200px;margin-left: 50px">手机表面缺陷检测平台</span>
+<!--        <el-image :src="imageSrc" style="width: 100%; height: auto;max-height: 300px"></el-image>-->
+    </div>
 
+    <div class="navigationBar" id="navigationBar">
+      <!--    导航栏 #ffd04b  #2c3e50-->
       <el-menu :default-active="this.$route.path" class="el-menu-demo" router mode="horizontal"
-               @select="handleSelect" text-color="#fff" active-text-color="#ffd04b" background-color="#2c3e50">
+               :class="{nav_fixed: navigationBarFixed}"
+               @select="handleSelect" active-text-color="rgb(73,178,82)" background-color="white">
+        <el-menu-item>
+          <el-image :src="imageSrc1" style="width: 120px; height: 60px; margin-top: -10px" disabled></el-image>
+        </el-menu-item>
         <el-menu-item class="el-menu-item" v-for="(item,i) in navList" :key="i" :index="item.name" style="margin-bottom: 0px">
           {{ item.navItem}}
         </el-menu-item>
       </el-menu>
     </div>
-
-    <el-image :src="imageSrc" style="width: 100%; height: 250px;background-color: #2c3e50"></el-image>
-
-
 
     <router-view class="menu-right"/>
   </div>
@@ -26,7 +29,9 @@ export default {
 
   data(){
     return {
-      imageSrc: '../static/image/test3.jpeg',
+      navigationBarFixed:'',
+      imageSrc: '../static/image/test2.jpeg',
+      imageSrc1: '../static/image/logo.png',
       navList: [
         {name: '/', navItem: '缺陷检测'},
         {name: '/components/HelloWorld', navItem: '模型训练'},
@@ -37,10 +42,29 @@ export default {
     };
   },
 
+  mounted() {
+    window.addEventListener("scroll",this.handleScroll)
+  },
+  destroyed() {
+    window.removeEventListener("scroll",this.handleScroll)
+  },
+
   methods:{
     handleSelect(key,keyPath){
       console.log(key,keyPath);
+    },
+
+    handleScroll(){
+      var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+      var offsetTop = document.querySelector('#navigationBar').offsetTop
+      if (scrollTop > offsetTop) {
+        this.navigationBarFixed = true
+      } else {
+        this.navigationBarFixed = false
+      }
+      // console.log(scrollTop)
     }
+
   }
 }
 </script>
@@ -53,20 +77,28 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
+  .nav_fixed{
+  position:fixed;
+  background-color:#Fff;
+  top:0;
+  z-index:999;
+  }
   .el-menu-demo{
     width: 100%;
-    /*margin-bottom: -100px;*/
-    margin-top: 45px;
-    /*height: 200px;*/
-    /*background-image: url("../static/image/test2.jpeg");*/
-    /*background-repeat: no-repeat;*/
-    /*background-size: cover;*/
-    /*background-color: #545c64*/
+    margin-top: 0px;
   }
-
   /* 导航栏的间距等样式 */
   .el-menu-item {
     padding: 0 62px;
     font-size: 16px;
+  }
+
+  .cc-primary-picture {
+    width: 100%;
+    height: 300px;
+    background-color: black;
+    /*background-image: url("../static/image/logo2.jpeg");*/
+    /*background-repeat: no-repeat;*/
+    /*background-size: cover;*/
   }
 </style>
