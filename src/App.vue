@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <div class="cc-primary-picture">
-      <span style="font-size: xx-large;color: white; margin-top:200px;margin-left: 50px">手机表面缺陷检测平台</span>
+    <div style="background-color: black; height: 300px">
+      <span style="font-size: xx-large;color: white;margin:100px 0 0 50px;float: left">手机表面缺陷检测平台</span>
 <!--        <el-image :src="imageSrc" style="width: 100%; height: auto;max-height: 300px"></el-image>-->
     </div>
 
@@ -85,7 +85,7 @@ export default {
   }
   .el-menu-demo{
     width: 100%;
-    margin-top: 0px;
+    margin-top: 0;
   }
   /* 导航栏的间距等样式 */
   .el-menu-item {
