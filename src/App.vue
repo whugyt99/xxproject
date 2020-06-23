@@ -2,7 +2,8 @@
   <div id="app">
     <div style="background-color: black; height: 300px">
       <span style="font-size: xx-large;color: white;margin:100px 0 0 50px;float: left">手机表面缺陷检测平台</span>
-<!--        <el-image :src="imageSrc" style="width: 100%; height: auto;max-height: 300px"></el-image>-->
+        <el-image :src="imageSrc" style="margin-top:50px;float:right;margin-right:50px;width: 400px; height: auto;max-height: 300px"></el-image>
+
     </div>
 
     <div class="navigationBar" id="navigationBar">
@@ -30,11 +31,11 @@ export default {
   data(){
     return {
       navigationBarFixed:'',
-      imageSrc: '../static/image/test2.jpeg',
+      imageSrc: '../static/image/IMG1.jpg',
       imageSrc1: '../static/image/logo.png',
       navList: [
         {name: '/', navItem: '缺陷检测'},
-        {name: '/components/DefectDetectionPage', navItem: '模型训练'},
+        {name: '/components/TrainingPage', navItem: '模型训练'},
         {name: '/components/Manager', navItem: '产品说明'},
         {name: '/components/PostMission', navItem: '新闻资讯'},
         {name: '/components/PostMission', navItem: '联系我们'},
