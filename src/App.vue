@@ -14,7 +14,7 @@
         <el-menu-item>
           <el-image :src="imageSrc1" style="width: 120px; height: 60px; margin-top: -10px" disabled></el-image>
         </el-menu-item>
-        <el-menu-item class="el-menu-item" v-for="(item,i) in navList" :key="i" :index="item.name" style="margin-bottom: 0px">
+        <el-menu-item class="el-menu-item" v-for="(item,i) in navList" :key="i" :index="item.name" style="margin-bottom: 0">
           {{ item.navItem}}
         </el-menu-item>
       </el-menu>
@@ -98,7 +98,7 @@ export default {
     width: 100%;
     height: 300px;
     background-color: black;
-    /*background-image: url("../static/image/logo2.jpeg");*/
+    /*background-image: url("../static/image/logo.jpeg");*/
     /*background-repeat: no-repeat;*/
     /*background-size: cover;*/
   }

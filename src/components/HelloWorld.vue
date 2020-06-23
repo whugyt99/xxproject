@@ -1,25 +1,27 @@
 
 <template>
   <div style="margin-top: 20px">
-    <el-row style="margin-left: 30px">
-      <el-col :span="6" v-for="(o, index) in 2" :key="o" :offset="index > 0 ? 2 : 0">
-        <el-card style="text-align: center">
+    <el-row style="margin-left: 50px">
+      <el-col :span="6" v-for="(item,i) in defectTypes" :key="i" :offset="i > 0 ? 2 : 0">
+        <el-card style="text-align: center;max-height: 350px" :body-style="{padding: '30px'}">
 
           <!--            图标-->
-          <div style="font-size: 60px;text-align: center">
-            <el-avatar :fit="fit" :size="120">img</el-avatar>
-            <!--            <i class="el-icon-mobile-phone"></i>-->
-          </div>
+<!--          <el-popover placement="top-end" trigger="hover">-->
+<!--              <el-avatar :fit="fit" :size="220" :src=item.imgSrc>img</el-avatar>-->
+            <div style="font-size: 60px;text-align: center">
+              <el-avatar :fit="fit" :size="120" :src=item.imgSrc>img</el-avatar>
+            </div>
+<!--          </el-popover>-->
+
 
           <!--        类型名称  -->
-<!--          <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image">-->
           <div style="">
-            <span>缺陷检测类型</span>
+            <span>{{item.name}}</span>
           </div>
 
           <!--          详细介绍-->
-          <div class="bottom clearfix" style="padding-bottom: 50px">
-            <time class="time">{{ msg }}</time>
+          <div class="bottom clearfix" style="padding-bottom: 40px">
+            <time class="time">{{ item.details }}</time>
 <!--              <el-button type="text" class="button">操作按钮</el-button>-->
           </div>
         </el-card>
@@ -35,6 +37,12 @@ export default {
   data () {
     return {
       msg: '缺陷描述',
+      fit: 'fill',
+      defectTypes: [
+        {imgSrc:'../static/image/缺陷类型/崩边1.jpg' ,name:'崩边', details:'手机玻璃在切割过程中，因为自身原因，以及受切割工具及速度影响，导致切割面不平整，出现翻卷、毛边等现象'},
+        {imgSrc:'../static/image/缺陷类型/亮点1.jpg' ,name:'亮点', details:'因为自身原因，以及受切割工具及速度影响，导致切割面不平整，出现翻卷、毛边等现象'},
+        {imgSrc:'../static/image/缺陷类型/内污.jpg' ,name:'内污', details:'因为自身原因，以及受切割工具及速度影响，导致切割面不平整，出现翻卷、毛边等现象'},
+      ]
     }
   }
 }
@@ -48,8 +56,8 @@ export default {
   }
 
   .bottom {
-    margin-top: 13px;
-    line-height: 12px;
+    margin-top: 17px;
+    line-height: 17px;
   }
 
   .clearfix:before,
