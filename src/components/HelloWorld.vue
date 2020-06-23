@@ -39,7 +39,8 @@ export default {
       msg: '缺陷描述',
       fit: 'fill',
       defectTypes: [
-        {imgSrc:'../static/image/缺陷类型/崩边1.jpg' ,name:'崩边', details:'手机玻璃在切割过程中，因为自身原因，以及受切割工具及速度影响，导致切割面不平整，出现翻卷、毛边等现象'},
+        {imgSrc:'../static/image/缺陷类型/崩边1.jpg' ,name:'崩边', details:'切割面不平整的现象\n\r' +
+            '≦0.02mm2,允許2個，或≦0.03mm2,允许1个'},
         {imgSrc:'../static/image/缺陷类型/亮点1.jpg' ,name:'亮点', details:'因为自身原因，以及受切割工具及速度影响，导致切割面不平整，出现翻卷、毛边等现象'},
         {imgSrc:'../static/image/缺陷类型/内污.jpg' ,name:'内污', details:'因为自身原因，以及受切割工具及速度影响，导致切割面不平整，出现翻卷、毛边等现象'},
       ]
