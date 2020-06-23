@@ -34,7 +34,7 @@ export default {
       imageSrc1: '../static/image/logo.png',
       navList: [
         {name: '/', navItem: '缺陷检测'},
-        {name: '/components/HelloWorld', navItem: '模型训练'},
+        {name: '/components/DefectDetectionPage', navItem: '模型训练'},
         {name: '/components/Manager', navItem: '产品说明'},
         {name: '/components/PostMission', navItem: '新闻资讯'},
         {name: '/components/PostMission', navItem: '联系我们'},
