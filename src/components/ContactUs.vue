@@ -14,7 +14,7 @@
           return {
             contactWay:[
               {name:'办公电话',number:'124456'},
-              {name:'公共邮箱',number:''},
+              {name:'公共邮箱',number:'12345'},
               {name:'办公地址',number:''},
               {name:'通讯地址',number:''},
               {name:'邮政编码',number:''},
