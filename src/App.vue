@@ -1,27 +1,34 @@
 <template>
-  <div id="app">
-    <div style="background-color: black; height: 300px">
-      <span style="font-size: xx-large;color: white;margin:100px 0 0 50px;float: left">手机表面缺陷检测平台</span>
-        <el-image :src="imageSrc" style="margin-top:50px;float:right;margin-right:50px;width: 400px; height: auto;max-height: 300px"></el-image>
+  <el-container>
+    <el-main>
+      <div id="app">
+        <div style="background-color: black; height: 300px">
+          <span style="font-size: xx-large;color: white;margin:100px 0 0 50px;float: left">手机表面缺陷检测平台</span>
+          <el-image :src="imageSrc" style="margin-top:50px;float:right;margin-right:50px;width: 400px; height: auto;max-height: 300px"></el-image>
 
-    </div>
+        </div>
 
-    <div class="navigationBar" id="navigationBar">
-      <!--    导航栏 #ffd04b  #2c3e50-->
-      <el-menu :default-active="this.$route.path" class="el-menu-demo" router mode="horizontal"
-               :class="{nav_fixed: navigationBarFixed}"
-               @select="handleSelect" active-text-color="rgb(73,178,82)" background-color="white">
-        <el-menu-item>
-          <el-image :src="imageSrc1" style="width: 120px; height: 60px; margin-top: -10px" disabled></el-image>
-        </el-menu-item>
-        <el-menu-item class="el-menu-item" v-for="(item,i) in navList" :key="i" :index="item.name" style="margin-bottom: 0">
-          {{ item.navItem}}
-        </el-menu-item>
-      </el-menu>
-    </div>
+        <div class="navigationBar" id="navigationBar">
+          <!--    导航栏 #ffd04b  #2c3e50-->
+          <el-menu :default-active="this.$route.path" class="el-menu-demo" router mode="horizontal"
+                   :class="{nav_fixed: navigationBarFixed}"
+                   @select="handleSelect" active-text-color="rgb(73,178,82)" background-color="white">
+            <el-menu-item>
+              <el-image :src="imageSrc1" style="width: 120px; height: 60px; margin-top: -10px" disabled></el-image>
+            </el-menu-item>
+            <el-menu-item class="el-menu-item" v-for="(item,i) in navList" :key="i" :index="item.name" style="margin-bottom: 0">
+              {{ item.navItem}}
+            </el-menu-item>
+          </el-menu>
+        </div>
+        <router-view class="menu-right"/>
+      </div>
+    </el-main>
 
-    <router-view class="menu-right"/>
-  </div>
+
+    <el-footer height="120px">XX有限公司</el-footer>
+  </el-container>
+
 </template>
 
 <script>
@@ -36,9 +43,9 @@ export default {
       navList: [
         {name: '/', navItem: '缺陷检测'},
         {name: '/components/TrainingPage', navItem: '模型训练'},
-        {name: '/components/Manager', navItem: '产品说明'},
+        {name: '/components/Introduction', navItem: '产品说明'},
         {name: '/components/PostMission', navItem: '新闻资讯'},
-        {name: '/components/PostMission', navItem: '联系我们'},
+        {name: '/components/ContactUs', navItem: '联系我们'},
       ],
     };
   },
@@ -94,12 +101,14 @@ export default {
     font-size: 16px;
   }
 
-  .cc-primary-picture {
-    width: 100%;
-    height: 300px;
-    background-color: black;
-    /*background-image: url("../static/image/logo.jpeg");*/
-    /*background-repeat: no-repeat;*/
-    /*background-size: cover;*/
+.el-footer {
+  background-color: rgb(45,46,48);
+  color: white;
+  text-align: center;
+  line-height: 120px;
+}
+  .el-main{
+    padding: 0;
+    min-height: calc(100vh - 60px);
   }
 </style>

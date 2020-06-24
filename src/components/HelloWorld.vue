@@ -36,7 +36,6 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: '缺陷描述',
       fit: 'fill',
       defectTypes: [
         {imgSrc:'../static/image/缺陷类型/崩边1.jpg' ,name:'崩边', details:'切割面不平整的现象\n 合格标准：≦0.02mm2,允许2个，\n或≦0.03mm2,允许1个'},

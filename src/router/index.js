@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import HelloWorld from '../components/HelloWorld'
 import DefectDetectionPage from '../components/DefectDetectionPage'
 import TrainingPage from '../components/TrainingPage'
+import Introduction from "../components/Introduction";
+import ContactUs from "../components/ContactUs";
 
 Vue.use(Router)
 
@@ -29,5 +31,16 @@ export default new Router({
           name: 'TrainingPage',
           component: TrainingPage
         },
+    {
+      path: '/components/Introduction',
+      name: 'Introduction',
+      component: Introduction
+    },
+    {
+      path: '/components/ContactUs',
+      name: 'ContactUs',
+      component: ContactUs
+    },
+
   ]
 })
