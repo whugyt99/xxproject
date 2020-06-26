@@ -6,8 +6,8 @@
 <div class="content" style="margin-left:20px">
 <ul>
 <li style="line-height:30px;"><el-link :underline="false" href="newsInfo/N0624">停止维护通知</el-link></li>
-<li style="line-height:30px;"><el-link :underline="false" href="TrainingPage">关于系统升级的通知</el-link></li>
-<li style="line-height:30px;"><el-link :underline="false" href="TrainingPage">缺陷检测分类更新</el-link></li>
+<li style="line-height:30px;"><el-link :underline="false" href="newsInfo/N0624">关于系统升级的通知</el-link></li>
+<li style="line-height:30px;"><el-link :underline="false" href="newsInfo/N0624">缺陷检测分类更新</el-link></li>
 </ul>
 </div>
 </div>
@@ -19,6 +19,11 @@ export default {
   return {
 
   }
+  },
+  methods:{
+  //refresh(){
+  //this.$router.go(0);
+  //},
   }
   }
 </script>

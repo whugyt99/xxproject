@@ -38,8 +38,8 @@ export default {
   data(){
     return {
       navigationBarFixed:'',
-      imageSrc: '../static/image/IMG1.jpg',
-      imageSrc1: '../static/image/logo.png',
+      imageSrc: require('../static/image/IMG1.jpg'),
+      imageSrc1: require('../static/image/logo.png'),
       navList: [
         {name: '/', navItem: '缺陷检测'},
         {name: '/components/TrainingPage', navItem: '模型训练'},

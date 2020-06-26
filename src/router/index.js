@@ -16,7 +16,8 @@ export default new Router({
     {
       path: '/',
       name: 'HelloWorld',
-      component: HelloWorld
+      component: HelloWorld,
+
     },
     {
       path: '/components/HelloWorld',
@@ -36,7 +37,8 @@ export default new Router({
         {
               path: '/components/NewsPage',
               name: 'NewsPage',
-              component: NewsPage
+              component: NewsPage,
+
             },
     {
       path: '/components/Introduction',
@@ -48,11 +50,11 @@ export default new Router({
       name: 'ContactUs',
       component: ContactUs
     },
-    {
-          path: '/components/newsInfo/N0624',
-          name: 'N0624',
-          component: N0624
-        },
+{
+      path: '/components/newsInfo/N0624',
+      name: 'N0624',
+      component: N0624
+    },
 
   ]
 })
