@@ -2,7 +2,7 @@
     <el-card class="box-card" shadow="never">
       <div slot="header">联系我们</div>
       <div v-for="(item,i) in contactWay" :key="i" class="text">
-        {{item.name + ':' + item.number}}
+        {{item.name + '：' + item.number}}
       </div>
     </el-card>
 </template>
@@ -34,6 +34,7 @@
 
   .text{
     font-size: 14px;
+    line-height: 30px;
     color: dimgray;
   }
 </style>

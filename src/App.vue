@@ -106,9 +106,10 @@ export default {
   color: white;
   text-align: center;
   line-height: 120px;
+  font-size: 14px;
 }
   .el-main{
-    padding: 0;
-    min-height: calc(100vh - 60px);
+    padding: 0 0 30px;
+    min-height: calc(100vh - 120px);
   }
 </style>
