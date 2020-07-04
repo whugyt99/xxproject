@@ -3,12 +3,14 @@
   <div style="margin-top: 20px">
     <el-row style="margin-left: 50px">
       <el-col :span="6" v-for="(item,i) in defectTypes" :key="i" :offset="1">
+<div style="cursor:pointer" @click="insurance(item.name)" >
         <el-card style="text-align: center;height: 340px;margin-top: 40px"
-                 :body-style="{padding: '30px'}" class="el-card">
+                 :body-style="{padding: '30px'}" class="el-card" shadow="hover">
 
           <!--            图标-->
 <!--          <el-popover placement="top-end" trigger="hover">-->
 <!--              <el-avatar :fit="fit" :size="220" :src=item.imgSrc>img</el-avatar>-->
+
             <div style="font-size: 60px;text-align: center">
               <el-avatar :fit="fit" :size="120" :src=item.imgSrc>img</el-avatar>
             </div>
@@ -16,15 +18,17 @@
 
 
           <!--        类型名称  -->
-          <div style="">
+          <div style="" >
             <span>{{item.name}}</span>
           </div>
 
           <!--          详细介绍-->
-          <div class="bottom" style="padding-bottom: 40px">
+          <div class="bottom" style="padding-bottom: 40px" >
             <span>{{ item.details }}</span>
           </div>
+
         </el-card>
+</div>
       </el-col>
     </el-row>
 
@@ -37,6 +41,7 @@ export default {
   data () {
     return {
       fit: 'fill',
+id:'',
       defectTypes: [
         {imgSrc:'../static/image/缺陷类型/崩边1.jpg' ,name:'崩边', details:'切割面不平整的现象\n 合格标准：≦0.02mm2,允许2个，\n或≦0.03mm2,允许1个'},
         {imgSrc:'../static/image/缺陷类型/亮点1.jpg' ,name:'亮点', details:'合格标准：≦0.01mm2,允许1个'},
@@ -47,6 +52,17 @@ export default {
         {imgSrc:'../static/image/缺陷类型/内污.jpg' ,name:'内污', details:'合格标准：\n白色:≦0.02mm2,允许2个,间距大于 5mm.\n黑色:≦0.05mm2.'},
       ]
     }
+  },
+
+  methods:{
+  insurance(id) {
+  this.$router.push({
+  path: '/components/DefectDetectionPage',
+  query: {
+  id: id
+  }
+  })
+  }
   }
 }
 </script>

@@ -2,7 +2,7 @@
 <div>
 <div style="margin-left:170px;margin-right:170px;margin-top:20px">
 <el-upload
-class="upload-demo"
+class="upload-demo" name="photo"
   action="https://jsonplaceholder.typicode.com/posts/"
   :on-preview="handlePreview"
   :on-remove="handleRemove"
