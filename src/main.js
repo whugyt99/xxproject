@@ -7,6 +7,7 @@ import ElementUi from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 import axios from 'axios';
 import qs from 'qs';
+import imageConversion from 'image-conversion';
 Vue.use(ElementUi)
 
 Vue.config.productionTip = false
