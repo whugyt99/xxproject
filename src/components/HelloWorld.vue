@@ -43,26 +43,29 @@ export default {
       fit: 'fill',
 id:'',
       defectTypes: [
-        {imgSrc:'../static/image/缺陷类型/崩边1.jpg' ,name:'崩边', details:'切割面不平整的现象\n 合格标准：≦0.02mm2,允许2个，\n或≦0.03mm2,允许1个'},
-        {imgSrc:'../static/image/缺陷类型/亮点1.jpg' ,name:'亮点', details:'合格标准：≦0.01mm2,允许1个'},
-        {imgSrc:'../static/image/缺陷类型/内污.jpg' ,name:'内污', details:'合格标准：\n白色:≦0.02mm2,允许2个,间距大于 5mm.\n黑色:≦0.05mm2.'},
-        {imgSrc:'../static/image/缺陷类型/内污.jpg' ,name:'内污', details:'合格标准：\n白色:≦0.02mm2,允许2个,间距大于 5mm.\n黑色:≦0.05mm2.'},
-        {imgSrc:'../static/image/缺陷类型/内污.jpg' ,name:'内污', details:'合格标准：\n白色:≦0.02mm2,允许2个,间距大于 5mm.\n黑色:≦0.05mm2.'},
-        {imgSrc:'../static/image/缺陷类型/内污.jpg' ,name:'内污', details:'合格标准：\n白色:≦0.02mm2,允许2个,间距大于 5mm.\n黑色:≦0.05mm2.'},
-        {imgSrc:'../static/image/缺陷类型/内污.jpg' ,name:'内污', details:'合格标准：\n白色:≦0.02mm2,允许2个,间距大于 5mm.\n黑色:≦0.05mm2.'},
+        {imgSrc:'../static/image/缺陷类型/崩边.jpg' ,name:'崩边', details:'合格标准：\n≦0.02mm²,允许2个，\n或≦0.03mm²,允许1个'},
+        {imgSrc:'../static/image/缺陷类型/亮点.jpg' ,name:'亮点', details:'合格标准：\n≦0.01mm²,允许1个'},
+        {imgSrc:'../static/image/缺陷类型/内污.jpg' ,name:'内污', details:'合格标准：\n白色:≦0.02mm²,允许2个,间距大于 5mm.\n黑色:≦0.05mm².'},
+        {imgSrc:'../static/image/缺陷类型/缺墨.jpg' ,name:'缺墨', details:'合格标准：\n接收孔/菜单孔缺墨，透光：高度≦0.03mm,点状按≦0.03mm²,允许1个\n边缘缺墨：≦0.03mm²，允许一个'},
+        {imgSrc:'../static/image/缺陷类型/视划.jpg' ,name:'视窗区划伤', details:'合格标准：\n长度<10mm,允许5条，不可交叉，明显度依签样；\n不可有视窗区反面垂直于短边划伤\n'},
+        {imgSrc:'../static/image/缺陷类型/视压.jpg' ,name:'视窗区压伤', details:'合格标准：\n长度<10mm,允许1条,程度按签样判定.\n'},
+        {imgSrc:'../static/image/缺陷类型/牙.jpg' ,name:'牙边', details:'合格标准：\n视窗区牙边：高度≦0.05mm，或单个牙缺≦0.02mm²\nAR孔 & PROX牙边：高度≦0.03mm.\n'},
+        {imgSrc:'../static/image/缺陷类型/油划.jpg' ,name:'油墨区划伤', details:'合格标准：\n≦0.01mm²,允许1个'},//TODO
+        {imgSrc:'../static/image/缺陷类型/油压.jpg' ,name:'油墨区压伤', details:'合格标准：\n≦0.08mm²,允许2个, 间距大于5mm.'},
+        {imgSrc:'../static/image/缺陷类型/油压痕.jpg' ,name:'油墨区压痕', details:'合格标准：\n长度<10mm,允许1条,程度按签样判定.'},
       ]
     }
   },
 
-  methods:{
-  insurance(id) {
-  this.$router.push({
-  path: '/components/DefectDetectionPage',
-  query: {
-  id: id
-  }
-  })
-  }
+  methods: {
+    insurance(id) {
+      this.$router.push({
+        path: '/components/DefectDetectionPage',
+        query: {
+          id: id
+        }
+      })
+    }
   }
 }
 </script>

@@ -26,7 +26,7 @@
     </el-main>
 
 
-    <el-footer height="120px">XX有限公司</el-footer>
+    <el-footer height="120px">XX有限公司ⓒ2020</el-footer>
   </el-container>
 
 </template>
