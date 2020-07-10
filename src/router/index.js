@@ -11,7 +11,7 @@ import N0624 from "../components/newsInfo/N0624";
 Vue.use(Router)
 
 export default new Router({
-  mode:'history',
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -25,21 +25,21 @@ export default new Router({
       component: HelloWorld
     },
     {
-          path: '/components/DefectDetectionPage',
-          name: 'DefectDetectionPage',
-          component: DefectDetectionPage
-        },
-{
-          path: '/components/TrainingPage',
-          name: 'TrainingPage',
-          component: TrainingPage
-        },
-        {
-              path: '/components/NewsPage',
-              name: 'NewsPage',
-              component: NewsPage,
+      path: '/components/DefectDetectionPage',
+      name: 'DefectDetectionPage',
+      component: DefectDetectionPage
+    },
+    {
+      path: '/components/TrainingPage',
+      name: 'TrainingPage',
+      component: TrainingPage
+    },
+    {
+      path: '/components/NewsPage',
+      name: 'NewsPage',
+      component: NewsPage,
 
-            },
+    },
     {
       path: '/components/Introduction',
       name: 'Introduction',
@@ -50,7 +50,7 @@ export default new Router({
       name: 'ContactUs',
       component: ContactUs
     },
-{
+    {
       path: '/components/newsInfo/N0624',
       name: 'N0624',
       component: N0624

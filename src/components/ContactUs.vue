@@ -1,6 +1,6 @@
 <template>
     <el-card class="box-card" shadow="never">
-      <div slot="header">联系我们</div>
+      <div slot="header" style="font-size: x-large">联系我们</div>
       <div v-for="(item,i) in contactWay" :key="i" class="text">
         {{item.name + '：' + item.number}}
       </div>
@@ -27,14 +27,14 @@
 <style scoped>
 .box-card{
   width: 480px;
-  margin-left: 25%;
+  margin-left: 10%;
   margin-top: 30px;
   border: 0;
 }
 
   .text{
-    font-size: 14px;
-    line-height: 30px;
+    font-size: 16px;
+    line-height: 15px;
     color: dimgray;
   }
 </style>
