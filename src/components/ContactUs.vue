@@ -33,8 +33,8 @@
 }
 
   .text{
-    font-size: 16px;
-    line-height: 15px;
+    font-size: 15px;
+    /*line-height: 15px;*/
     color: dimgray;
   }
 </style>

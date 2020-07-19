@@ -41,7 +41,7 @@
       return {
         fit: 'fill',
         id: '',
-  value:'',
+        value:'',
         defectTypes: [
           {imgSrc: '../static/image/缺陷类型/崩边.jpg', name: '崩边', details: '合格标准：\n≦0.02mm²,允许2个，\n或≦0.03mm²,允许1个', value: 1},
           {imgSrc: '../static/image/缺陷类型/亮点.jpg', name: '亮点', details: '合格标准：\n≦0.01mm²,允许1个' , value: 2},
@@ -63,7 +63,7 @@
           path: '/components/DefectDetectionPage',
           query: {
             id: id,
-  value: value
+            value: value
           }
         })
       }

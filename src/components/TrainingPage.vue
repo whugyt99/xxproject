@@ -1,29 +1,29 @@
 <template>
   <div style="padding-top:30px;padding-left: 15%">
     <el-tabs :tab-position="tabPosition" @tab-click="handleClick">
-<!--      tab1:新建训练文件-->
+      <!--      tab1:新建训练文件-->
       <el-tab-pane label="新建训练" class="item-color">
-<!-- trainStatus为200，可以训练-->
-        <div style="padding-left:5%;padding-right: 10%"  v-if="trainStatus === 200">
+        <!-- trainStatus为200，可以训练-->
+        <div style="padding-left:5%;padding-right: 10%" v-if="trainStatus === 200">
           <el-form>
             <el-form-item>
-              <span style="font-size: x-large;color: black;float:left">上传有缺陷图片</span>
+              <span style="font-size: x-large;color: black;float:left">上传有缺陷图片（训练）</span>
             </el-form-item>
-
             <el-form-item>
               <el-upload
                 ref="upload"
                 class="upload-demo"
                 action="http://47.98.232.219:5000/data_upload?pic_type=0"
-                list-type="picture"
+                list-type="text"
                 :auto-upload="false"
                 multiple
-                :on-change="handleChange"
+                :on-change="handleChange1"
                 :on-success="handleAvatarSuccess"
                 :file-list="fileList1">
                 <el-button slot="trigger" size="small" type="primary" plain>选取文件</el-button>
-                <el-button style="margin-left: 10px" size="small" type="success" plain @click="upLoad1">点击上传</el-button>
-                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+                <el-button style="margin-left: 10px" size="small" type="danger" plain @click="removeAll1">全部移除</el-button>
+                <el-button style="margin-left: 30px" size="small" type="success" plain @click="upLoad">点击上传({{this.fileList1.length}})</el-button>
+                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，至少50张，每张不超过2M</div>
               </el-upload>
             </el-form-item>
 
@@ -32,7 +32,7 @@
             </el-form-item>
 
             <el-form-item>
-              <span style="font-size: x-large;color: black;float:left">上传无缺陷图片</span>
+              <span style="font-size: x-large;color: black;float:left">上传无缺陷图片（训练）</span>
             </el-form-item>
 
             <el-form-item>
@@ -41,14 +41,63 @@
                 class="upload-demo"
                 multiple
                 :auto-upload="false"
-                list-type="picture"
+                list-type="text"
                 action="http://47.98.232.219:5000/data_upload?pic_type=1"
-                :on-change="handleChange"
+                :on-change="handleChange2"
                 :on-success="handleAvatarSuccess"
                 :file-list="fileList2">
                 <el-button slot="trigger" size="small" type="primary" plain>选取文件</el-button>
-                <el-button style="margin-left: 10px" size="small" type="success" plain @click="upLoad2">点击上传</el-button>
-                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+                <el-button style="margin-left: 10px" size="small" type="success" plain @click="upLoad">点击上传({{this.fileList2.length}})</el-button>
+                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，至少50张，每张不超过2M</div>
+              </el-upload>
+            </el-form-item>
+
+<!--            检测-->
+            <el-form-item>
+              <el-divider></el-divider>
+            </el-form-item>
+
+            <el-form-item>
+              <span style="font-size: x-large;color: black;float:left">上传有缺陷图片（检测）</span>
+            </el-form-item>
+            <el-form-item>
+              <el-upload
+                ref="upload"
+                class="upload-demo"
+                multiple
+                :auto-upload="false"
+                list-type="text"
+                action="http://47.98.232.219:5000/data_upload?pic_type=2"
+                :on-change="handleChange3"
+                :on-success="handleAvatarSuccess"
+                :file-list="fileList3">
+                <el-button slot="trigger" size="small" type="primary" plain>选取文件</el-button>
+                <el-button style="margin-left: 10px" size="small" type="success" plain @click="upLoad">点击上传({{this.fileList3.length}})</el-button>
+                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，至少50张，每张不超过2M</div>
+              </el-upload>
+            </el-form-item>
+
+            <el-form-item>
+              <el-divider></el-divider>
+            </el-form-item>
+
+            <el-form-item>
+              <span style="font-size: x-large;color: black;float:left">上传无缺陷图片（检测）</span>
+            </el-form-item>
+            <el-form-item>
+              <el-upload
+                ref="upload"
+                class="upload-demo"
+                multiple
+                :auto-upload="false"
+                list-type="text"
+                action="http://47.98.232.219:5000/data_upload?pic_type=3"
+                :on-change="handleChange4"
+                :on-success="handleAvatarSuccess"
+                :file-list="fileList4">
+                <el-button slot="trigger" size="small" type="primary" plain>选取文件</el-button>
+                <el-button style="margin-left: 10px" size="small" type="success" plain @click="upLoad">点击上传({{this.fileList4.length}})</el-button>
+                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，至少50张，每张不超过2M</div>
               </el-upload>
             </el-form-item>
 
@@ -64,38 +113,38 @@
         </div>
       </el-tab-pane>
 
-<!--tab2：已有的训练文件-->
+      <!--tab2：已有的训练文件-->
       <el-tab-pane label="训练文件">
-<!--下拉框 -->
-<el-select v-model="value" placeholder="请选择" @change="function2(value)">
-<el-option
-  v-for="(item,index) in files"
-  :key="index"
-  :value="item"
-  :label="item">
-<!--<span style="float: left">{{ item }}</span>-->
-<!-- <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span> -->
-</el-option>
-</el-select>
-<!-- 上传图片  -->
-<div style="margin-top:20px">
-<el-upload
-class="upload-demo" name="photo"
-  ref="upload"
-  action="http://47.98.232.219:5000/pic_test"
-  :on-preview="handlePreview"
-  :on-remove="handleRemove"
-  :file-list="fileList"
-  list-type="picture"
-  :auto-upload="false"
-  :on-success="handleAvatarSuccess"
-  :before-upload="beforeUpload"
-  :disabled="status ==-1?true:false">
-<el-button slot="trigger" size="small" type="primary" disabled>选取文件</el-button>
-<el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
-</el-upload>
-</div>
-</el-tab-pane>
+        <!--下拉框 -->
+        <el-select v-model="value" placeholder="请选择" @change="function2(value)">
+          <el-option
+            v-for="(item,index) in files"
+            :key="index"
+            :value="item"
+            :label="item">
+            <!--<span style="float: left">{{ item }}</span>-->
+            <!-- <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span> -->
+          </el-option>
+        </el-select>
+        <!-- 上传图片  -->
+        <div style="margin-top:20px">
+          <el-upload
+            class="upload-demo" name="photo"
+            ref="upload"
+            action="http://47.98.232.219:5000/pic_test"
+            :on-preview="handlePreview"
+            :on-remove="handleRemove"
+            :file-list="fileList"
+            list-type="picture"
+            :auto-upload="false"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeUpload"
+            :disabled="status === -1">
+            <el-button slot="trigger" size="small" type="primary" disabled>选取文件</el-button>
+            <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
+          </el-upload>
+        </div>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -103,14 +152,17 @@ class="upload-demo" name="photo"
 
 <script>
   import HelloWorld from "./HelloWorld";
+
   export default {
     name: 'TrainingPage',
     components: {HelloWorld},
     data() {
       return {
-        tabPosition:'left',
+        tabPosition: 'left',
         fileList1: [],
         fileList2: [],
+        fileList3: [],
+        fileList4: [],
         value: '',
         fileList: [],
         files: [],
@@ -121,24 +173,63 @@ class="upload-demo" name="photo"
         key: '',
       }
     },
-  mounted () {
-  this.getTrain();
-  },
+    mounted() {
+      this.getTrain();
+    },
     methods: {
-      handleChange(file, fileList) {
-        this.fileList = fileList.slice(-3);
+      //列表变化
+      handleChange1(file, fileList) {
+        if(fileList.length>100){
+          this.$message.error('最多上传100张！');
+          this.fileList1 = fileList.slice(-100);
+        }else{
+          this.fileList1 = fileList;
+        }
+      },
+      handleChange2(file, fileList) {
+        if(fileList.length>100){
+          this.$message.error('最多上传100张！');
+          this.fileList2 = fileList.slice(-100);
+        }else{
+          this.fileList2 = fileList;
+        }
+      },
+      handleChange3(file, fileList) {
+        if(fileList.length>100){
+          this.$message.error('最多上传100张！');
+          this.fileList3 = fileList.slice(-100);
+        }else{
+          this.fileList3 = fileList;
+        }
+      },
+      handleChange4(file, fileList) {
+        if(fileList.length>100){
+          this.$message.error('最多上传100张！');
+          this.fileList4 = fileList.slice(-100);
+        }else{
+          this.fileList4 = fileList;
+        }
       },
 
-      //有缺陷图片上传
-      upLoad1(){
+
+      //图片上传
+      upLoad() {
         this.$refs.upload.submit();
       },
 
-      //无缺陷图片上传
-      upLoad2(){
-        this.$refs.upload.submit();
+      //清空列表
+      removeAll1() {
+        this.fileList1=[];
       },
-
+      removeAll2() {
+        this.fileList2=[];
+      },
+      removeAll3() {
+        this.fileList3=[];
+      },
+      removeAll4() {
+        this.fileList4=[];
+      },
       //上传训练文件
       submitUpload() {
         this.$refs.upload.submit();
@@ -147,62 +238,81 @@ class="upload-demo" name="photo"
       handleAvatarSuccess(response, file, fileList) {
         //response
         console.log(response);
+        this.$message.success('上传成功！');
       },
 
-  handleRemove(file, fileList) {
-  console.log(file, fileList);
-  },
+      handleRemove(file, fileList) {
+        console.log(file, fileList);
+      },
 
-  handlePreview(file) {
-  console.log(file);
-  },
-  beforeUpload(file) {
+      handlePreview(file) {
+        console.log(file);
+      },
+      beforeUpload(file) {
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+        const isMr50 = this.fileList1.length >=50 ;
 
-  },
-  //判断可否训练
-  getTrain(){
-  this.$axios
-  .get('http://47.98.232.219:5000/to_train')
-  .then(response => {
-  console.log(response);
-  this.trainStatus = response.status;
-  console.log(this.trainStatus);
-  })
-  .catch(function (error) { // 请求失败处理
-  console.log(error);
-  });
-  },
-  getWeights(){
-  this.$axios
-  .get('http://47.98.232.219:5000/get_weights')
-  .then(response => {
-  console.log(response);
-  this.files = response.data.data;
-  })
-  .catch(function (error) { // 请求失败处理
-  console.log(error);
-  });
-  },
-  handleClick(tab, event){
-        if(tab.label == '训练文件'){
+        if (!isJPG) {
+          this.$message.error('上传图片只能是 JPG 格式!');
+        }
+        if (!isLt2M) {
+          this.$message.error('上传图片大小不能超过 2MB!');
+        }
+        if(!isMr50) {
+          this.$message.error('至少需要50张图片！');
+        }
+        if(!(isJPG && isLt2M && isMr50)){
+          this.$message.error('格式错误');
+        }
+        return isJPG && isLt2M && isMr50;
+      },
+      //判断可否训练
+      getTrain() {
+        this.$axios
+          .get('http://47.98.232.219:5000/to_train')
+          .then(response => {
+            console.log(response);
+            this.trainStatus = response.status;
+            console.log(this.trainStatus);
+          })
+          .catch(function (error) { // 请求失败处理
+            console.log(error);
+          });
+      },
+      getWeights() {
+        this.$axios
+          .get('http://47.98.232.219:5000/get_weights')
+          .then(response => {
+            console.log(response);
+            this.files = response.data.data;
+          })
+          .catch(function (error) { // 请求失败处理
+            console.log(error);
+          });
+      },
+      handleClick(tab, event) {
+        if (tab.label === '训练文件') {
           this.getWeights();
-  }
-  },
-  function2(value){
+        }
+      },
+      function2(value) {
         console.log(value);
-  }
+      }
     }
   }
 </script>
 
 
 <style>
-  .el-tabs__item.is-active{
-    color:rgb(73,178,82) !important;
+  .el-tabs__item.is-active {
+    color: rgb(73, 178, 82) !important;
   }
+
   .el-tabs__active-bar {
     background-color: rgb(73, 178, 82);
   }
+
   .el-tabs__item:hover {
     color: rgb(73, 178, 82) !important;
   }

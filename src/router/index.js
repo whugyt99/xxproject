@@ -19,11 +19,11 @@ export default new Router({
       component: HelloWorld,
 
     },
-    {
-      path: '/components/HelloWorld',
-      name: 'HelloWorld',
-      component: HelloWorld
-    },
+    // {
+    //   path: '/components/HelloWorld',
+    //   name: 'HelloWorld',
+    //   component: HelloWorld
+    // },
     {
       path: '/components/DefectDetectionPage',
       name: 'DefectDetectionPage',
