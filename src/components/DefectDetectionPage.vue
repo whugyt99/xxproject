@@ -14,14 +14,14 @@
         list-type="picture"
         :auto-upload="false"
         :on-success="handleAvatarSuccess"
-        >
+      >
         <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
         <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
       </el-upload>
-<!--  检测结果 -->
-<div style="height: 100px">
-<div  v-for="n in num" style="margin:10px 0 0 0px;">{{result[n-1]}}</div>
-</div>
+      <!--  检测结果 -->
+      <div style="height: 100px">
+        <div v-for="n in num" style="margin:10px 0 0 0px;">{{result[n-1]}}</div>
+      </div>
 
     </div>
   </div>
@@ -36,9 +36,9 @@
         fileList: [],
         pic_class: '',
         url: '',
-  result: [],
-  num: 0,
-  //label: '',
+        result: [],
+        num: 0,
+        //label: '',
       }
     },
     mounted() {
@@ -73,7 +73,7 @@
         //response
         console.log(response);
         this.result[this.num] = "检测结果: " + response.msg;
-        this.num = this.num+1;
+        this.num = this.num + 1;
         console.log(this.num);
         console.log(this.result[0]);
       },
