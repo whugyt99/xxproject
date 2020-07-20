@@ -20,7 +20,7 @@
       </el-upload>
       <!--  检测结果 -->
       <div style="height: 100px">
-        <div v-for="n in num" style="margin:10px 0 0 0px;">{{result[n-1]}}</div>
+        <div v-for="n in num" style="margin:10px 0 0 0;">{{result[n-1]}}</div>
       </div>
 
     </div>

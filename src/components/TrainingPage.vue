@@ -127,7 +127,19 @@
             </el-form-item>
 
             <el-form-item>
-              <el-button type="success" plain>开始训练</el-button>
+              <span>请输入训练文件名：</span>
+              <el-input
+                type="text"
+                style="width: 220px;margin-left: 10px"
+                placeholder="请输入内容"
+                v-model="fileName"
+                maxlength="20"
+                show-word-limit
+              >
+              </el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="success" plain :disabled="fileName === ''" @click="train">开始训练</el-button>
             </el-form-item>
 
           </el-form>
@@ -140,37 +152,38 @@
 
       <!--tab2：已有的训练文件-->
       <el-tab-pane label="训练文件">
-        <!--下拉框 -->
-        <el-select v-model="value" placeholder="请选择" @change="function2(value)">
-          <el-option
-            v-for="(item,index) in files"
-            :key="index"
-            :value="item"
-            :label="item">
-            <!--<span style="float: left">{{ item }}</span>-->
-            <!-- <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span> -->
-          </el-option>
-        </el-select>
-        <!-- 上传图片  -->
-        <div style="margin-top:20px;padding-right: 10%">
-          <el-upload
-            class="upload-demo" name="photo"
-            ref="upload"
-            :action="UploadUrl()"
-            :file-list="fileList"
-            list-type="picture"
-            :auto-upload="false"
-            :on-success="handleAvatarSuccess1"
-          >
-            <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-            <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
-          </el-upload>
-          <!--  检测结果 -->
-          <div style="height: 100px">
-            <div v-for="n in num" style="margin:10px 0 0 0;">{{result[n-1]}}</div>
+        <div style="padding-left:5%;padding-right: 10%">
+          <!--下拉框 -->
+          <el-select v-model="value" placeholder="请选择" @change="function2(value)">
+            <el-option
+              v-for="(item,index) in files"
+              :key="index"
+              :value="item"
+              :label="item">
+              <!--<span style="float: left">{{ item }}</span>-->
+              <!-- <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span> -->
+            </el-option>
+          </el-select>
+          <!-- 上传图片  -->
+          <div style="margin-top:20px;padding-right: 10%">
+            <el-upload
+              class="upload-demo" name="photo"
+              ref="upload"
+              :action="UploadUrl()"
+              :file-list="fileList"
+              list-type="picture"
+              :auto-upload="false"
+              :on-success="handleAvatarSuccess1"
+            >
+              <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+              <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
+            </el-upload>
+            <!--  检测结果 -->
+            <div style="height: 100px">
+              <div v-for="n in num" style="margin:10px 0 0 0;">{{result[n-1]}}</div>
+            </div>
           </div>
         </div>
-
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -186,6 +199,7 @@
     data() {
       return {
         tabPosition: 'left',
+        fileName: '',
         fileList1: [],
         fileList2: [],
         value: '',//选中的文件名
@@ -302,6 +316,17 @@
         }
         return isJPG && isLt2M;
       },
+      //点击开始训练
+      train(){
+        this.$axios
+          .get('http://47.98.232.219:5000/get_trained?weight='+this.fileName+'.h5')
+          .then(response => {
+            console.log(response);
+          })
+          .catch(function (error) { // 请求失败处理
+            console.log(error);
+          });
+      },
 
 
       //TAB---2
@@ -332,7 +357,7 @@
           .get('http://47.98.232.219:5000/to_train')
           .then(response => {
             console.log(response);
-            this.trainStatus = response.status;
+            this.trainStatus = response.data.state;
             console.log(this.trainStatus);
           })
           .catch(function (error) { // 请求失败处理
