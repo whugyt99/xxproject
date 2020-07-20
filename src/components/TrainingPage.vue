@@ -1,14 +1,15 @@
 <template>
   <div style="padding-top:30px;padding-left: 15%">
     <el-tabs :tab-position="tabPosition" @tab-click="handleClick">
-      <!--      tab1:新建训练文件-->
+<!--      tab1:新建训练文件-->
       <el-tab-pane label="新建训练" class="item-color">
-        <!-- trainStatus为200，可以训练-->
-        <div style="padding-left:5%;padding-right: 10%" v-if="trainStatus === 200">
+<!-- trainStatus为200，可以训练-->
+        <div style="padding-left:5%;padding-right: 10%"  v-if="trainStatus === 200">
           <el-form>
             <el-form-item>
-              <span style="font-size: x-large;color: black;float:left">上传有缺陷图片（训练）</span>
+              <span style="font-size: x-large;color: black;float:left">上传有缺陷图片</span>
             </el-form-item>
+
             <el-form-item>
               <el-upload
                 ref="upload"
@@ -113,38 +114,42 @@
         </div>
       </el-tab-pane>
 
-      <!--tab2：已有的训练文件-->
+<!--tab2：已有的训练文件-->
       <el-tab-pane label="训练文件">
-        <!--下拉框 -->
-        <el-select v-model="value" placeholder="请选择" @change="function2(value)">
-          <el-option
-            v-for="(item,index) in files"
-            :key="index"
-            :value="item"
-            :label="item">
-            <!--<span style="float: left">{{ item }}</span>-->
-            <!-- <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span> -->
-          </el-option>
-        </el-select>
-        <!-- 上传图片  -->
-        <div style="margin-top:20px">
-          <el-upload
-            class="upload-demo" name="photo"
-            ref="upload"
-            action="http://47.98.232.219:5000/pic_test"
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
-            :file-list="fileList"
-            list-type="picture"
-            :auto-upload="false"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeUpload"
-            :disabled="status === -1">
-            <el-button slot="trigger" size="small" type="primary" disabled>选取文件</el-button>
-            <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
-          </el-upload>
-        </div>
-      </el-tab-pane>
+<!--下拉框 -->
+<el-select v-model="value" placeholder="请选择" @change="function2(value)">
+<el-option
+  v-for="(item,index) in files"
+  :key="index"
+  :value="item"
+  :label="item">
+<!--<span style="float: left">{{ item }}</span>-->
+<!-- <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span> -->
+</el-option>
+</el-select>
+<!-- 上传图片  -->
+<div style="margin-top:20px;padding-right: 10%">
+<el-upload
+class="upload-demo" name="photo"
+  ref="upload1"
+  :action="UploadUrl()"
+  :on-preview="handlePreview"
+  :on-remove="handleRemove"
+  :file-list="fileList"
+  list-type="picture"
+  :auto-upload="false"
+  :on-success="handleAvatarSuccess1"
+  >
+<el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+<el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
+</el-upload>
+<!--  检测结果 -->
+<div style="height: 100px">
+<div  v-for="n in num" style="margin:10px 0 0 0px;">{{result[n-1]}}</div>
+</div>
+</div>
+
+</el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -152,25 +157,25 @@
 
 <script>
   import HelloWorld from "./HelloWorld";
-
   export default {
     name: 'TrainingPage',
     components: {HelloWorld},
     data() {
       return {
-        tabPosition: 'left',
+        tabPosition:'left',
         fileList1: [],
         fileList2: [],
+        value: '',//选中的文件名
         fileList3: [],
         fileList4: [],
-        value: '',
         fileList: [],
         files: [],
         status: -1,//-1为禁用状态
         trainStatus: '',
         label: '',
-        // value: '',
         key: '',
+  result: [],
+  num: 0,
       }
     },
     mounted() {
@@ -232,18 +237,32 @@
       },
       //上传训练文件
       submitUpload() {
-        this.$refs.upload.submit();
+        if(this.status == -1){
+          console.log('1123');
+  this.$message.error('请选择训练文件！');
+  }else{
+          console.log(this.status);
+  this.$refs.upload1.submit();
+  }
       },
       //图片上传成功后
-      handleAvatarSuccess(response, file, fileList) {
+      handleAvatarSuccess1(response, file, fileList) {
         //response
         console.log(response);
-        this.$message.success('上传成功！');
+  this.result[this.num] = "检测结果: " + response.msg;
+  this.num = this.num+1;
+  console.log(this.num);
+  console.log(this.result[0]);
       },
+  handleAvatarSuccess(response, file, fileList) {
+  //response
+  console.log(response);
+  this.$message.success('上传成功！');
+  },
 
-      handleRemove(file, fileList) {
-        console.log(file, fileList);
-      },
+  handleRemove(file, fileList) {
+  console.log(file, fileList);
+  },
 
       handlePreview(file) {
         console.log(file);
@@ -294,25 +313,27 @@
       handleClick(tab, event) {
         if (tab.label === '训练文件') {
           this.getWeights();
-        }
-      },
-      function2(value) {
+  }
+  },
+  function2(value){
         console.log(value);
-      }
+        this.status = 1;
+  },
+  UploadUrl: function () {
+  return "http://47.98.232.219:5000/upload_pic?pic_class=" + this.value;
+  }
     }
   }
 </script>
 
 
 <style>
-  .el-tabs__item.is-active {
-    color: rgb(73, 178, 82) !important;
+  .el-tabs__item.is-active{
+    color:rgb(73,178,82) !important;
   }
-
   .el-tabs__active-bar {
     background-color: rgb(73, 178, 82);
   }
-
   .el-tabs__item:hover {
     color: rgb(73, 178, 82) !important;
   }

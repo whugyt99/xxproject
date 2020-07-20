@@ -14,11 +14,15 @@
         list-type="picture"
         :auto-upload="false"
         :on-success="handleAvatarSuccess"
-        :before-upload="beforeUpload"
-      >
+        >
         <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
         <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
       </el-upload>
+<!--  检测结果 -->
+<div style="height: 100px">
+<div  v-for="n in num" style="margin:10px 0 0 0px;">{{result[n-1]}}</div>
+</div>
+
     </div>
   </div>
 </template>
@@ -32,6 +36,9 @@
         fileList: [],
         pic_class: '',
         url: '',
+  result: [],
+  num: 0,
+  //label: '',
       }
     },
     mounted() {
@@ -65,31 +72,35 @@
       handleAvatarSuccess(response, file, fileList) {
         //response
         console.log(response);
+        this.result[this.num] = "检测结果: " + response.msg;
+        this.num = this.num+1;
+        console.log(this.num);
+        console.log(this.result[0]);
       },
-      beforeUpload(file) {
-        return new Promise((resolve, reject) => {
-          //let _URL = window.URL || window.webkitURL;
-          let isLt2M = file.size / 1024 / 1024 < 2; // 判定图片大小是否小于2MB
-          if (isLt2M) {
-            resolve(file)
-          } else {
-            console.log('111');
-            const imageConversion = require("image-conversion");
-            //const es6promise = require('es6-promise').polyfill();
-            //console.log(file); // 压缩到400KB,这里的400就是要压缩的大小,可自定义
-            imageConversion.compressAccurately(file, 2048).then(res => {
-              console.log(res);
-              console.log('222');
-              resolve(res);
-            }).catch((error) => {
-              reject(error);
-              //throw new Error(error);
-              //console.log(error);
-            })
-          }
-          //img.src = _URL.createObjectURL(file);
-        })
-      },
+//      beforeUpload(file) {
+//        return new Promise((resolve, reject) => {
+//          //let _URL = window.URL || window.webkitURL;
+//          let isLt2M = file.size / 1024 / 1024 < 2; // 判定图片大小是否小于2MB
+//          if (isLt2M) {
+//            resolve(file)
+//          } else {
+//            console.log('111');
+//            const imageConversion = require("image-conversion");
+//            //const es6promise = require('es6-promise').polyfill();
+//            //console.log(file); // 压缩到400KB,这里的400就是要压缩的大小,可自定义
+//            imageConversion.compressAccurately(file, 2048).then(res => {
+//              console.log(res);
+//              console.log('222');
+//              resolve(res);
+//            }).catch((error) => {
+//              reject(error);
+//              //throw new Error(error);
+//              //console.log(error);
+//            })
+//          }
+//          //img.src = _URL.createObjectURL(file);
+//        })
+//      },
       UploadUrl: function () {
         return "http://47.98.232.219:5000/upload_pic?pic_class=" + this.value;
       }
