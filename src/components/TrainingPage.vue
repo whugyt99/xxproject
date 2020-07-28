@@ -1,11 +1,14 @@
 <template>
   <div style="padding-top:30px;padding-left: 15%">
-    <el-tabs :tab-position="tabPosition" @tab-click="handleClick">
+    <el-tabs :tab-position="tabPosition" @tab-click="handleClick" v-model="tabActiveName">
       <!--      tab1:新建训练文件-->
-      <el-tab-pane label="新建训练" class="item-color">
+      <el-tab-pane label="新建训练" class="item-color" name="first">
         <!-- trainStatus为200，可以训练-->
-        <div style="padding-left:5%;padding-right: 10%" v-if="trainStatus === 200">
+        <div style="padding-left:5%;padding-right: 10%" v-if="trainStatus = 200">
           <el-form>
+            <el-form-item>
+              <span>提示：因为资源有限，请在10分钟内完成图片上传并点击训练</span>
+            </el-form-item>
             <el-form-item>
               <span style="font-size: x-large;color: black;float:left">上传有缺陷图片（训练）</span>
             </el-form-item>
@@ -142,6 +145,12 @@
               <el-button type="success" plain :disabled="fileName === ''" @click="train">开始训练</el-button>
             </el-form-item>
 
+<!--            结果显示-->
+            <el-form-item>
+              <span>{{trainResult}}</span>
+            </el-form-item>
+
+
           </el-form>
         </div>
         <!-- trainStatus为400，不可以训练-->
@@ -151,7 +160,7 @@
       </el-tab-pane>
 
       <!--tab2：已有的训练文件-->
-      <el-tab-pane label="训练文件">
+      <el-tab-pane label="训练文件" name="second">
         <div style="padding-left:5%;padding-right: 10%">
           <!--下拉框 -->
           <el-select v-model="value" placeholder="请选择" @change="function2(value)">
@@ -198,6 +207,7 @@
     components: {HelloWorld},
     data() {
       return {
+        tabActiveName: 'first',
         tabPosition: 'left',
         fileName: '',
         fileList1: [],
@@ -213,6 +223,7 @@
         key: '',
         result: [],
         num: 0,
+        trainResult:'',
       }
     },
     mounted() {
@@ -319,8 +330,29 @@
       //点击开始训练
       train(){
         this.$axios
-          .get('http://47.98.232.219:5000/get_trained?weight='+this.fileName+'.h5')
+          //http://47.98.232.219:5000/get_trained?in_time= &weight=
+          .get('http://47.98.232.219:5000/get_trained?in_time='+Date.parse(new Date())/1000+'&weight='+this.fileName+'.h5')
           .then(response => {
+            if(response.data.state === 300){
+              this.$message.error('时间超过10分钟');
+              this.$router.push('/');
+            }else if(response.data.state === 400){
+              this.trainResult = response.data.msg;
+            }else if(response.data.state === 200){
+              this.$alert('请在\'训练文件\'界面使用生成的权重文件','训练成功',{
+                confirmButtonText: '确定',
+                callback: action => {
+                  this.tabActiveName = 'second';
+                  this.getWeights();
+                  this.removeAll1();
+                  this.removeAll2();
+                  this.removeAll3();
+                  this.removeAll4();
+                  this.trainResult = '';
+                  this.fileName = '';
+                }
+              });
+            }
             console.log(response);
           })
           .catch(function (error) { // 请求失败处理
