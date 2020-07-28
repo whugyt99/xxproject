@@ -163,6 +163,7 @@
       <el-tab-pane label="训练文件" name="second">
         <div style="padding-left:5%;padding-right: 10%">
           <!--下拉框 -->
+<span>请选择权重文件：</span>
           <el-select v-model="value" placeholder="请选择" @change="function2(value)">
             <el-option
               v-for="(item,index) in files"
@@ -184,8 +185,8 @@
               :auto-upload="false"
               :on-success="handleAvatarSuccess1"
             >
-              <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-              <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
+              <el-button slot="trigger" size="small" type="primary">选取图片</el-button>
+              <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">开始检测</el-button>
             </el-upload>
             <!--  检测结果 -->
             <div style="height: 100px">
@@ -365,7 +366,15 @@
       handleAvatarSuccess1(response, file, fileList) {
         //response
         console.log(response);
-        this.result[this.num] = "检测结果: " + response.msg;
+  if(response.state === 200){
+  if(response.data === 0){
+  this.result[this.num] = "检测结果: 检测成功，此图片是缺陷图片！";
+  }else{
+  this.result[this.num] = "检测结果: 检测成功，此图片是正常图片！";
+  }
+  }else{
+  this.result[this.num] = "检测失败！";
+  }
         this.num = this.num + 1;
         console.log(this.num);
         console.log(this.result[0]);

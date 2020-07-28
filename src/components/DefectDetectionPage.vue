@@ -15,8 +15,8 @@
         :auto-upload="false"
         :on-success="handleAvatarSuccess"
       >
-        <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-        <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
+        <el-button slot="trigger" size="small" type="primary">选取图片</el-button>
+        <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">开始检测</el-button>
       </el-upload>
       <!--  检测结果 -->
       <div style="height: 100px">
@@ -72,10 +72,19 @@
       handleAvatarSuccess(response, file, fileList) {
         //response
         console.log(response);
-        this.result[this.num] = "检测结果: " + response.msg;
+        if(response.state === 200){
+          if(response.data === 0){
+  this.result[this.num] = "检测结果: 检测成功，此图片是缺陷图片！";
+  }else{
+  this.result[this.num] = "检测结果: 检测成功，此图片是正常图片！";
+  }
+  }else{
+  this.result[this.num] = "检测失败，图片类型错误！";
+  }
+        //this.result[this.num] = "检测结果: " + response.msg;
         this.num = this.num + 1;
         console.log(this.num);
-        console.log(this.result[0]);
+        //console.log(this.result[0]);
       },
 //      beforeUpload(file) {
 //        return new Promise((resolve, reject) => {
