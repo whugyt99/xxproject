@@ -21,7 +21,36 @@
                           style="margin-bottom: 0">
               {{ item.navItem}}
             </el-menu-item>
+
+            <div style="text-align: right; margin-top: 12px">
+              <!--      头像-->
+              <i class="el-icon-user" style="margin-top:10px;margin-right: 10px"></i>
+              <!--       登录按钮-->
+              <el-button type="text" @click="formVisible = true" size="30px" style="margin-right: 25px">注册</el-button>
+              <el-dialog style="text-align: left" :visible.sync="formVisible" title="设置key值" width="500px">
+                  <el-form  @submit.native.prevent>
+                    <el-form-item label="key:">
+                      <el-input v-model="key" maxlength="30" minlength="2"
+                                show-word-limit clearable
+                                style="width: 300px"></el-input>
+                    </el-form-item>
+                    <el-form-item>（key值是您身份的唯一标志，若遗忘会丢失之前所有的数据信息）</el-form-item>
+                    <el-form-item style="text-align: center">
+                      <el-button type="primary" @click="register">确 定</el-button>
+                      <el-button @click="formVisible = false">取 消</el-button>
+                    </el-form-item>
+<!--                    <el-form-item label="密码" :label-width="formLabelWidth">-->
+<!--                      <el-input type="password" v-model="loginForm.loginPass" autocomplete="off" show-password></el-input>-->
+<!--                    </el-form-item>-->
+                  </el-form>
+                <div slot="footer" class="dialog-footer">
+
+                </div>
+              </el-dialog>
+            </div>
+
           </el-menu>
+
         </div>
         <router-view class="menu-right"/>
       </div>
@@ -49,6 +78,8 @@
           {name: '/components/NewsPage', navItem: '新闻资讯'},
           {name: '/components/ContactUs', navItem: '联系我们'},
         ],
+        formVisible: false,
+        key: '',
       };
     },
 
@@ -73,6 +104,28 @@
           this.navigationBarFixed = false
         }
         // console.log(scrollTop)
+      },
+
+      register(){
+        //设置key
+        if(this.key !== '') {
+          console.log("key success");
+          this.setCookie('key', this.key, 7);
+          console.log("cookie success");
+          this.$axios.get('http://192.168.3.3:8080/store_key?ukey=' + this.key)
+            .then(response => {
+              if (response.data.state === 200) {
+                console.log("key绑定成功！");
+                this.$message.success("key设置成功");
+                this.formVisible = false;
+              } else {
+                this.$message.error("key值重复，请重新选择");
+              }
+            })
+            .catch(function (error) {
+              console.log(error);
+            })
+        }
       }
 
     }
