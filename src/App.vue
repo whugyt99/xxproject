@@ -74,10 +74,7 @@
         navList: [
           {name: '/', navItem: '缺陷检测'},
           {name: '/components/TrainingPage', navItem: '模型训练'},
-<<<<<<< HEAD
           {name: '/components/shuju', navItem: '数据统计'},
-=======
->>>>>>> 6375098bdc113135efaf710641bee2e445cc8432
           {name: '/components/Introduction', navItem: '产品说明'},
           {name: '/components/NewsPage', navItem: '新闻资讯'},
           {name: '/components/ContactUs', navItem: '联系我们'},
