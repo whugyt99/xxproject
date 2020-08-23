@@ -37,6 +37,7 @@
 </template>
 <script>
   export default {
+
     name: 'DefectDetectionPage',
     data() {
       return {
