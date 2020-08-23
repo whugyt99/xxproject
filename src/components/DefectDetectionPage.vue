@@ -51,7 +51,7 @@
         url: '',
         result: [],
         num: 0,
-        key: '',
+        key: this.getCookie('key'),
         //label: '',
       }
     },
