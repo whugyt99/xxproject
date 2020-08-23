@@ -1,8 +1,20 @@
 <template>
   <div>
-    <div style="margin-left:170px;margin-right:170px;margin-top:20px">
+    <div style="margin-left:170px;margin-right:170px;margin-top:20px;font-size: x-large">
       <span>{{id}}缺陷检测</span>
-
+    </div>
+    <div style="margin:20px 170px 0 170px">
+      <el-form ref="form">
+<!--        <el-form-item label="本次检测是否保存数据？">-->
+<!--          <el-radio v-model="radio" label="yes">保存</el-radio>-->
+<!--          <el-radio v-model="radio" label="no">不保存</el-radio>-->
+<!--        </el-form-item>-->
+        <el-form-item label="your key:">
+          <el-input v-model="key" maxlength="30" minlength="2"
+                    show-word-limit clearable
+                    style="width: 300px"></el-input>
+        </el-form-item>
+      </el-form>
     </div>
     <div style="margin-left:170px;margin-right:170px;margin-top:20px">
       <el-upload
@@ -18,15 +30,6 @@
       >
         <el-button slot="trigger" size="small" type="primary">选取图片</el-button>
         <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">开始检测</el-button>
-        <div>
-          <span>your k:</span>
-          <el-input
-            style="margin-top: 10px;margin-left: 10px; max-width=100px"
-            placeholder="请输入内容"
-            v-model="k"
-            clearable>
-          </el-input>
-        </div>
       </el-upload>
       <!--  检测结果 -->
       <div style="height: 100px">
@@ -38,7 +41,6 @@
 </template>
 <script>
   export default {
-
     name: 'DefectDetectionPage',
     data() {
       return {
@@ -49,8 +51,8 @@
         url: '',
         result: [],
         num: 0,
+        key: this.getCookie('key'),
         //label: '',
-        k: '',
       }
     },
     mounted() {
@@ -74,60 +76,39 @@
       },
       //图片上传
       submitUpload() {
-        //let _this = this;
-//setTimeout(function() {
-        //_this.$refs.upload.submit();
-        //},400)
-        this.$refs.upload.submit();
+        if(this.key !== ''){
+          this.$refs.upload.submit();
+        }else{
+          this.$alert('请先输入key，或者点击导航栏中\'注册\'按钮进行注册', 'key不能为空', {
+            confirmButtonText: '确定',
+          });
+        }
+
       },
       //图片上传成功后
       handleAvatarSuccess(response, file, fileList) {
         //response
         console.log(response);
-        if(response.state === 200){
-          if(response.data === 0){
-  this.result[this.num] = "检测结果: 检测成功，此图片是缺陷图片！";
-  }else{
-  this.result[this.num] = "检测结果: 检测成功，此图片是正常图片！";
-  }
-  }else{
-  this.result[this.num] = "检测失败，图片类型错误！";
-  }
+        if (response.state === 200) {
+          if (response.data === 0) {
+            this.result[this.num] = "检测结果: 检测成功，此图片是缺陷图片！";
+          } else {
+            this.result[this.num] = "检测结果: 检测成功，此图片是正常图片！";
+          }
+        } else {
+          this.result[this.num] = "检测失败，图片类型错误！";
+        }
         //this.result[this.num] = "检测结果: " + response.msg;
         this.num = this.num + 1;
         console.log(this.num);
         //console.log(this.result[0]);
       },
-//      beforeUpload(file) {
-//        return new Promise((resolve, reject) => {
-//          //let _URL = window.URL || window.webkitURL;
-//          let isLt2M = file.size / 1024 / 1024 < 2; // 判定图片大小是否小于2MB
-//          if (isLt2M) {
-//            resolve(file)
-//          } else {
-//            console.log('111');
-//            const imageConversion = require("image-conversion");
-//            //const es6promise = require('es6-promise').polyfill();
-//            //console.log(file); // 压缩到400KB,这里的400就是要压缩的大小,可自定义
-//            imageConversion.compressAccurately(file, 2048).then(res => {
-//              console.log(res);
-//              console.log('222');
-//              resolve(res);
-//            }).catch((error) => {
-//              reject(error);
-//              //throw new Error(error);
-//              //console.log(error);
-//            })
-//          }
-//          //img.src = _URL.createObjectURL(file);
-//        })
-//      },
+
       UploadUrl: function () {
-        return "http://47.98.232.219:5000/upload_pic?pic_class=" + this.value;
+        return "http://192.168.3.3:8080/upload_pic?pic_class=" + this.value + "&ukey=" + this.key;
       }
     }
   }
 </script>
 <style>
-
 </style>
