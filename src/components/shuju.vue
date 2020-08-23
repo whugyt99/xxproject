@@ -86,6 +86,7 @@ getresult() {
             //this.drawchart();
 //为什么不按顺序来，我晕了
 
+
           }
         },
 

@@ -2,6 +2,7 @@
   <div>
     <div style="margin-left:170px;margin-right:170px;margin-top:20px">
       <span>{{id}}缺陷检测</span>
+
     </div>
     <div style="margin-left:170px;margin-right:170px;margin-top:20px">
       <el-upload
