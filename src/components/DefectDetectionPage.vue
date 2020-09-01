@@ -77,6 +77,8 @@
       //图片上传
       submitUpload() {
         if(this.key !== ''){
+          this.setCookie('key',this.key,7);
+          console.log("key reserve success");
           this.$refs.upload.submit();
         }else{
           this.$alert('请先输入key，或者点击导航栏中\'注册\'按钮进行注册', 'key不能为空', {

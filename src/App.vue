@@ -156,7 +156,7 @@
 
   /* 导航栏的间距等样式 */
   .el-menu-item {
-    padding: 0 50px;
+    padding: 0 3%;
     font-size: 16px;
   }
 
