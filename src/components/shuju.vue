@@ -3,14 +3,49 @@
 <el-tabs :tab-position="tabPosition" v-model="tabActiveName" @tab-click="handleClick">
 <!--      tab1:历史数据-->
 <el-tab-pane label="历史数据" class="item-color" name="first">
+<!--历史数据扇形图-->
+<canvas id="canvas_circle1" width="420" height="240">
+                浏览器不支持canvas
+            </canvas>
 </el-tab-pane>
 
 <!--tab2：我的数据-->
-
 <el-tab-pane label="我的数据" name="second">
+<div style="margin:20px 170px 0 170px">
+      <el-form ref="form">
+        <el-form-item label="your key:">
+          <el-input v-model="key" maxlength="30" minlength="2"
+                    show-word-limit clearable
+                    style="width: 300px"></el-input>
+                    <el-button type="primary" @click="inputKey()">确定</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+<!--我的数据表格-->
+ <el-table
+    :data="tableData"
+    height="250"
+    border
+    style="width: 100%">
+    <el-table-column
+      prop="test_time"
+      label="时间"
+      width="180">
+    </el-table-column>
+    <el-table-column
+      prop="ukey"
+      label="KEY"
+      width="180">
+    </el-table-column>
+    <el-table-column
+      prop="pictype"
+      label="检测结果(0为缺陷)">
+    </el-table-column>
 
-<div>111</div>
-<canvas id="canvas_circle" width="500" height="300">
+  </el-table>
+
+<!--我的数据扇形图-->
+<canvas id="canvas_circle" width="420" height="240">
                 浏览器不支持canvas
             </canvas>
 
@@ -19,6 +54,8 @@
 </el-tabs>
 </div>
 </template>
+
+
 
 <script>
   //import HelloWorld from "./HelloWorld";
@@ -32,15 +69,21 @@
   tabPosition: 'left',
   myresult: [],
   allresult: [],
-  num: 0,
   mlength:'',
+  alength:'',
   rate:'',
+  rate1:'',
   defectNum:0,
+  defectNum1:0,
+   tableData: [],
+   key: this.getCookie('key'),
   }
   },
 
   mounted() {
-this.getallresult();
+  this.getresult();
+  this.getallresult();
+  console.log("key为："+this.key);
 //this.init();
 
   },
@@ -53,6 +96,11 @@ this.getallresult();
   console.log(response);
   this.allresult = response.data.data;
   console.log(this.allresult);
+  this.alength = this.allresult.length;
+      console.log(this.alength);
+      if(this.alength!= 0){
+          this.drawchart1();
+          }
   })
   .catch(function (error) { // 请求失败处理
   console.log(error);
@@ -62,15 +110,19 @@ this.getallresult();
   //获取用户检测结果
 getresult() {
   this.$axios
-  .get('http://192.168.3.3:8080/get_ones_result?ukey=gary')
+  .get('http://192.168.3.3:8080/get_ones_result?ukey='+ this.key)
   .then(response => {
   console.log(response);
   this.myresult = response.data.data;
+  this.tableData = this.myresult;
     console.log(this.myresult);
     //console.log(this.myresult[0].pictype);
     //console.log(this.myresult.length);
     this.mlength = this.myresult.length;
     console.log(this.mlength);
+    if(this.mlength!= 0){
+    this.drawchart();
+    }
   })
   .catch(function (error) { // 请求失败处理
   console.log(error);
@@ -79,12 +131,12 @@ getresult() {
 
   handleClick(tab, event) {
           if (tab.label === '我的数据') {
-            this.getresult();
-            console.log('1111');
-            console.log(this.num);
-            console.log(this.mlength);
+            //this.getresult();
+            //console.log('1111');
+            //console.log(this.num);
+            //console.log(this.mlength);
             //this.drawchart();
-//为什么不按顺序来，我晕了
+
 
 
           }
@@ -133,18 +185,17 @@ getresult() {
     var data_arr = [0.25, 0.25, 0.5];
     var color_arr = ["#67C23A", "#409EFF", "#E6A23C"];
     var text_arr = ["第一季度", "第二季度", "第三季度"];
-
     this.drawCircle("canvas_circle", data_arr, color_arr, text_arr);
     },
     //我的数据-我的检测正确率
     drawchart(){
-
+    var num = 0;
     console.log(this.mlength);
-    while(this.num < this.mlength){
+    while(num < this.mlength){
     if(this.myresult[num].pictype === 0){//0是缺陷图片
     this.defectNum = this.defectNum + 1;
     }
-    this.num++;
+    num++;
     }
     this.rate = this.defectNum / this.mlength;
     console.log(this.defectNum);
@@ -152,8 +203,33 @@ getresult() {
 
     var data_arr = [this.rate, 1-this.rate];
     var color_arr = ["#67C23A", "#E6A23C"];
-    var text_arr = ["第一季度", "第二季度"];
+    var text_arr = ["缺陷图片", "正常图片"];
     this.drawCircle("canvas_circle", data_arr, color_arr, text_arr);
+    },
+    //历史数据-我的检测正确率
+        drawchart1(){
+        var num = 0;
+        console.log(this.alength);
+        while(num < this.alength){
+        if(this.allresult[num].pictype === 0){//0是缺陷图片
+        this.defectNum1 = this.defectNum1 + 1;
+        }
+        num++;
+        }
+        this.rate1 = this.defectNum1 / this.alength;
+        console.log(this.defectNum1);
+        console.log(this.rate1);
+
+        var data_arr = [this.rate1, 1-this.rate1];
+        var color_arr = ["#67C23A", "#E6A23C"];
+        var text_arr = ["缺陷图片", "正常图片"];
+        this.drawCircle("canvas_circle1", data_arr, color_arr, text_arr);
+        },
+    inputKey(){
+    this.setCookie('key',this.key,7);
+    console.log("key reserve success");
+    console.log(this.key);
+    this.getresult();
     },
   }
   }
